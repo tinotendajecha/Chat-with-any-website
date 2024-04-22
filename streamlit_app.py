@@ -17,6 +17,9 @@ from langchain.chains import RetrievalQA
 from langchain.chains.conversation.memory import ConversationBufferWindowMemory
 from langchain.chains import ConversationChain
 
+import uuid
+
+
 
 
 # global variables
@@ -34,10 +37,14 @@ embeddings_model = HuggingFaceBgeEmbeddings(
 
 llm = ChatGroq(api_key="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")
 
-collection_name = 'website_info_vector_store'
 
+# Collection name for the user
 
+# create a uuid and concatenate to collection name
 
+unique_id = uuid.uuid4()
+unique_id = str(unique_id)
+collection_name = f'website_info_vector_store-{unique_id}'
 
 
 
