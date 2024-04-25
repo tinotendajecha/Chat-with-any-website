@@ -42,9 +42,11 @@ llm = ChatGroq(api_key="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
 
 # create a uuid and concatenate to collection name
 
-unique_id = uuid.uuid4()
-unique_id = str(unique_id)
-collection_name = f'website_info_vector_store-{unique_id}'
+# unique_id = uuid.uuid4()
+# unique_id = str(unique_id)
+# collection_name = f'website_info_vector_store-{unique_id}'
+
+collection_name = 'user_website'
 
 
 
