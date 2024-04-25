@@ -22,6 +22,7 @@ import uuid
 
 
 
+
 # global variables
 qdrant_client = QdrantClient(
     url="https://dd489e3d-8648-47fe-88cf-156f8e9e2c90.us-east4-0.gcp.cloud.qdrant.io:6333", 
@@ -35,7 +36,7 @@ embeddings_model = HuggingFaceBgeEmbeddings(
     model_name=model_name, model_kwargs=model_kwargs, encode_kwargs=encode_kwargs
 )
 
-llm = ChatGroq(api_key="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")
+llm = ChatGroq(api_key=os.getenv['GROQ_API_KEY'])
 
 
 # Collection name for the user
