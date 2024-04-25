@@ -36,7 +36,7 @@ embeddings_model = HuggingFaceBgeEmbeddings(
     model_name=model_name, model_kwargs=model_kwargs, encode_kwargs=encode_kwargs
 )
 
-llm = ChatGroq(api_key=os.getenv['GROQ_API_KEY'])
+llm = ChatGroq(api_key=os.getenv('GROQ_API_KEY'))
 
 
 # Collection name for the user
