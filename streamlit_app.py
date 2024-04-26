@@ -134,12 +134,12 @@ def streamlit_app():
         conversational_memory_length = 5
         memory = ConversationBufferWindowMemory(k=conversational_memory_length) # Set the memory length    
 
-        # Setup up chat history object
-        if 'chat_history' not in st.session_state:
-            st.session_state.chat_history=[]
-        else:
-            for message in st.session_state.chat_history:
-                memory.save_context({'input':message['human']},{'output':message['AI']})
+        # # Setup up chat history object
+        # if 'chat_history' not in st.session_state:
+        #     st.session_state.chat_history=[]
+        # else:
+        #     for message in st.session_state.chat_history:
+        #         memory.save_context({'input':message['human']},{'output':message['AI']})
 
 
         user_question = st.chat_input("Ask your question!")
@@ -166,10 +166,12 @@ def streamlit_app():
 
             answer = response['result']
 
-            # Append question and answer to chat history session state
-            message = {'human': user_question, 'AI' : answer}
+            memory.save_context({'input':user_question},{'output':answer})
 
-            st.session_state.chat_history.append(message)
+            # Append question and answer to chat history session state
+            # message = {'human': user_question, 'AI' : answer}
+
+            # st.session_state.chat_history.append(message)
 
             # Render the conversation on chat screen
             for message in st.session_state['chat_history']:
