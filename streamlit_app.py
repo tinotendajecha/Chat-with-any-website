@@ -157,7 +157,8 @@ def streamlit_app():
                 llm = llm,
                 chain_type="stuff",
                 retriever= doc_store.as_retriever(),
-                return_source_documents=True
+                return_source_documents=True,
+                memory=memory
             )
 
             # Get the response
