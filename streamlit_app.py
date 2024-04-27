@@ -36,7 +36,7 @@ embeddings_model = HuggingFaceBgeEmbeddings(
     model_name=model_name, model_kwargs=model_kwargs, encode_kwargs=encode_kwargs
 )
 
-llm = ChatGroq(api_key=os.getenv('GROQ_API_KEY'))
+llm = ChatGroq(api_key='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')
 
 
 # Collection name for the user
@@ -132,14 +132,16 @@ def streamlit_app():
 
         # Setup conversation memory
         conversational_memory_length = 5
-        memory = ConversationBufferWindowMemory(k=conversational_memory_length) # Set the memory length    
+        memory = ConversationBufferWindowMemory(k=conversational_memory_length) # Set the memory length     , output_key='result'
 
         # # Setup up chat history object
-        # if 'chat_history' not in st.session_state:
-        #     st.session_state.chat_history=[]
+        if 'chat_history' not in st.session_state:
+            st.session_state.chat_history=[]
         # else:
         #     for message in st.session_state.chat_history:
         #         memory.save_context({'input':message['human']},{'output':message['AI']})
+                # output_key = 'result'
+                # memory.save_context({'input': message['human']}, {output_key: message['result']})
 
 
         user_question = st.chat_input("Ask your question!")
@@ -157,7 +159,7 @@ def streamlit_app():
                 llm = llm,
                 chain_type="stuff",
                 retriever= doc_store.as_retriever(),
-                return_source_documents=True,
+                # return_source_documents=True,
                 memory=memory
             )
 
@@ -166,12 +168,13 @@ def streamlit_app():
 
             answer = response['result']
 
-            memory.save_context({'input':user_question},{'output':answer})
-
             # Append question and answer to chat history session state
-            # message = {'human': user_question, 'AI' : answer}
+            message = {'human': user_question, 'AI' : answer}
 
-            # st.session_state.chat_history.append(message)
+            st.session_state.chat_history.append(message)
+
+            # append to memory
+            memory.save_context({'input':user_question},{'output':answer})
 
             # Render the conversation on chat screen
             for message in st.session_state['chat_history']:
